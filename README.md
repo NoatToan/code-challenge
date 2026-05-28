@@ -85,9 +85,32 @@ src/
 - Simulated 1.5 s swap with loading spinner; last 10 swaps shown in history panel
 - Network errors and HTTP errors surfaced with distinct messages; token images from the Switcheo token-icons repo
 
-### Problem 3
+### Problem 3 — Messy React
 
-> To be added.
+> List out the computational inefficiencies and anti-patterns found in the code block below.
+>
+> This code block uses ReactJS with TypeScript, functional components, and React Hooks.
+>
+> You should also provide a refactored version of the code, but more points are awarded to accurately stating the issues and explaining correctly how to improve them.
+
+**Issues identified**
+
+| # | Issue | Category |
+|---|-------|----------|
+| 1 | `lhsPriority` used in `filter` but never declared — `balancePriority` was assigned instead | Bug / ReferenceError |
+| 2 | Filter logic inverted — keeps balances with `amount <= 0`, discards positive balances | Logic bug |
+| 3 | `prices` in `useMemo` dependency array but never read inside the memo | Spurious dependency |
+| 4 | `getPriority` re-created on every render (defined inside component, not memoised) | Performance |
+| 5 | `formattedBalances` computed but `rows` iterates `sortedBalances` instead — formatted values never used | Dead computation |
+| 6 | `rows` types each element as `FormattedWalletBalance` but the source array is `WalletBalance` | Type mismatch |
+| 7 | `balance.formatted` accessed on `WalletBalance` which has no `formatted` field | Runtime error |
+| 8 | `balance.amount.toFixed()` — no precision argument; produces integer string | Precision bug |
+| 9 | `key={index}` on a sorted list — index keys are unstable after re-sort | React anti-pattern |
+| 10 | `sort` comparator has no return for equal priorities — returns `undefined` (treated as 0) | Sort instability |
+| 11 | `blockchain` typed as `any` in `getPriority` — defeats TypeScript safety | Type safety |
+| 12 | Unused `children` destructured from props but never rendered | Dead code |
+
+![Problem 3 Refactored Solution](src/problems/problem3/problem3_refactored.png)
 
 ## Getting Started
 
