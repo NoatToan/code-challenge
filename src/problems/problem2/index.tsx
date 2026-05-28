@@ -1,4 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import Task from '../../components/Task';
 import TokenSelector from '../../components/TokenSelector';
 import { t } from '../../lib/i18n';
 import {
@@ -121,6 +122,28 @@ export default function Problem2() {
 
   return (
     <div className='problem-content'>
+      {/* ── Task statement ─────────────────────────────────────────────── */}
+      <Task title='Problem 2 — Fancy Form'>
+        <p>Create a currency swap form based on the template provided.</p>
+        <p>
+          The submission is required to:
+        </p>
+        <ul>
+          <li>Retrieve token prices from the provided API endpoint.</li>
+          <li>Allow users to select tokens and input a swap amount.</li>
+          <li>Display the converted output amount in real time.</li>
+          <li>Provide UI feedback for pending and error states.</li>
+        </ul>
+        <p>
+          The form must not use any form state management other than{' '}
+          <code>react-hook-form</code>, and all token data must be fetched from
+          the live endpoint below.
+        </p>
+        <pre>
+          <code>https://interview.switcheo.com/prices.json</code>
+        </pre>
+      </Task>
+
       {/* ── Form card ──────────────────────────────────────────────────── */}
       <div className='w-full  rounded-2xl border border-[var(--border)] bg-[var(--bg)] shadow-[var(--shadow)] p-6'>
         <h2 className='m-0 mb-1 text-xl font-semibold text-[var(--text-h)] tracking-tight'>
