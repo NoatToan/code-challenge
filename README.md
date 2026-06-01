@@ -112,6 +112,10 @@ src/
 
 ![Problem 3 Refactored Solution](src/problems/problem3/problem3_refactored.png)
 
+## Demo
+
+<video src="video_demo.mov" controls width="100%"></video>
+
 ## Getting Started
 
 ```bash
