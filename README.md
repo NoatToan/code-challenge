@@ -47,7 +47,7 @@ src/
 >
 > **Input**: `n` - any integer
 >
-> *Assuming this input will always produce a result lesser than `Number.MAX_SAFE_INTEGER`*.
+> _Assuming this input will always produce a result lesser than `Number.MAX_SAFE_INTEGER`_.
 >
 > **Output**: `return` - summation to `n`, i.e. `sum_to_n(5) === 1 + 2 + 3 + 4 + 5 === 15`.
 
@@ -65,7 +65,7 @@ src/
 
 > Create a currency swap form based on the template provided in the folder. A user would use this form to swap assets from one currency to another.
 >
-> *You may use any third party plugin, library, and/or framework for this problem.*
+> _You may use any third party plugin, library, and/or framework for this problem._
 >
 > 1. You may add input validation/error messages to make the form interactive.
 > 2. Your submission will be rated on its usage intuitiveness and visual attractiveness.
@@ -78,6 +78,7 @@ src/
 > 💡 Hint: feel free to simulate or mock interactions with a backend service, e.g. implement a loading indicator with a timeout delay for the submit button is good enough.
 
 **Approach**
+
 - Prices fetched via `@tanstack/react-query`; deduplicated by keeping the latest date entry per token; zero/negative prices discarded
 - Exchange rate: `fromToken.price / toToken.price`; output recomputes on every keystroke
 - Banker's rounding (round-half-to-even) with magnitude-adaptive decimal precision (2 dp for ≥100k, up to 8+ dp for very small values)
@@ -95,26 +96,28 @@ src/
 
 **Issues identified**
 
-| # | Issue | Category |
-|---|-------|----------|
-| 1 | `lhsPriority` used in `filter` but never declared — `balancePriority` was assigned instead | Bug / ReferenceError |
-| 2 | Filter logic inverted — keeps balances with `amount <= 0`, discards positive balances | Logic bug |
-| 3 | `prices` in `useMemo` dependency array but never read inside the memo | Spurious dependency |
-| 4 | `getPriority` re-created on every render (defined inside component, not memoised) | Performance |
-| 5 | `formattedBalances` computed but `rows` iterates `sortedBalances` instead — formatted values never used | Dead computation |
-| 6 | `rows` types each element as `FormattedWalletBalance` but the source array is `WalletBalance` | Type mismatch |
-| 7 | `balance.formatted` accessed on `WalletBalance` which has no `formatted` field | Runtime error |
-| 8 | `balance.amount.toFixed()` — no precision argument; produces integer string | Precision bug |
-| 9 | `key={index}` on a sorted list — index keys are unstable after re-sort | React anti-pattern |
-| 10 | `sort` comparator has no return for equal priorities — returns `undefined` (treated as 0) | Sort instability |
-| 11 | `blockchain` typed as `any` in `getPriority` — defeats TypeScript safety | Type safety |
-| 12 | Unused `children` destructured from props but never rendered | Dead code |
+| #   | Issue                                                                                                   | Category             |
+| --- | ------------------------------------------------------------------------------------------------------- | -------------------- |
+| 1   | `lhsPriority` used in `filter` but never declared — `balancePriority` was assigned instead              | Bug / ReferenceError |
+| 2   | Filter logic inverted — keeps balances with `amount <= 0`, discards positive balances                   | Logic bug            |
+| 3   | `prices` in `useMemo` dependency array but never read inside the memo                                   | Spurious dependency  |
+| 4   | `getPriority` re-created on every render (defined inside component, not memoised)                       | Performance          |
+| 5   | `formattedBalances` computed but `rows` iterates `sortedBalances` instead — formatted values never used | Dead computation     |
+| 6   | `rows` types each element as `FormattedWalletBalance` but the source array is `WalletBalance`           | Type mismatch        |
+| 7   | `balance.formatted` accessed on `WalletBalance` which has no `formatted` field                          | Runtime error        |
+| 8   | `balance.amount.toFixed()` — no precision argument; produces integer string                             | Precision bug        |
+| 9   | `key={index}` on a sorted list — index keys are unstable after re-sort                                  | React anti-pattern   |
+| 10  | `sort` comparator has no return for equal priorities — returns `undefined` (treated as 0)               | Sort instability     |
+| 11  | `blockchain` typed as `any` in `getPriority` — defeats TypeScript safety                                | Type safety          |
+| 12  | Unused `children` destructured from props but never rendered                                            | Dead code            |
 
 ![Problem 3 Refactored Solution](src/problems/problem3/problem3_refactored.png)
 
 ## Demo
 
 <video src="video_demo.mov" controls width="100%"></video>
+
+> Video not rendering? Download directly: [video_demo.mov](video_demo.mov)
 
 ## Getting Started
 
